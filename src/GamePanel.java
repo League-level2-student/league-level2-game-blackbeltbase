@@ -275,7 +275,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			setFont(endFont);
 			g.drawString("You escaped the trap and won", 50, 400);
 			g.drawString("with a score of " + score + " points!", 90, 450);
-			g.drawString("You cannot go back into the trap after you have won.", 150, 500);
+			g.drawString("You cannot go back into the trap after you have won.", 40, 500);
+			g.drawString("to replay, close and reopen this file", 90,550);
 		}
 	}
 
