@@ -113,7 +113,7 @@ int getProgress(int currentState) {
 				addLaser();
 			}
 		} else if (currentState == 4) {
-			for (int i = 0; i < 15; i++) {
+			for (int i = 0; i < 25; i++) {
 				addLaser();
 			}
 		}

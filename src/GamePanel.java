@@ -40,6 +40,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public static boolean gotImage = false;
 	int whichAvatar;
 	int takeNumber;
+	boolean isWon = false;
 	void startGame() {
 		laserSpawn = new Timer(1500, microManager);
 		laserSpawn.start();
@@ -145,10 +146,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawLevel1(Graphics g) {
-
 		if (needImage) {
 			loadImage("oceanlevel.jpg");
 		}
+		
 		if (gotImage) {
 			g.drawImage(image, 0, 0, Dodger.HEIGHT, Dodger.WIDTH, null);
 		} else {
@@ -213,8 +214,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			g.setColor(Color.BLUE);
 			g.fillRect(10, 500, 100, 100);
 		}
-//		needImage = true;
-//		gotImage = false;
 		g.setFont(otherFont);
 		g.setColor(Color.YELLOW);
 		int getScore = microManager.getScore();
@@ -241,14 +240,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setFont(otherFont);
 		g.setColor(Color.RED);
 		g.drawString("You have been put in a dangerous trap!", 200, 200);
-		g.drawString("Your chances of survival increase as your score increases!", 125, 400);
+		g.drawString("Your chances of survival increase as your score increases!", 100, 400);
 		g.drawString("When you hit 50 points in level 1, you move on to level 2.", 50, 430);
 		g.drawString("When you hit 100 points in level 2, you move on to level 3.", 50, 460);
-		g.drawString("When you hit 300 points in level 3, you finally escape!", 50, 490);
-		g.drawString("When you are ready to move on to the next level, press ENTER.", 50, 520);
-		g.drawString("You increase your score by dodging the lasers that appear in the trap!", 20, 550);
-		g.drawString("Use ARROW KEYS or WASD to dodge the lasers!", 200, 580);
-		g.drawString("Press SPACE to go back to the menu.", 200, 620);
+		g.drawString("When you hit 300 points in level 3, you finally escape!", 200, 490);
+		g.drawString("When you are ready to move on to the next level, press ENTER.", 200, 520);
+		g.drawString("You increase your score by dodging ", 50, 550);
+		g.drawString("the lasers that appear in the trap!", 50, 580);
+		g.drawString("Use ARROW KEYS or WASD to dodge the lasers!", 200, 610);
+		g.drawString("Press SPACE to go back to the menu.", 200, 640);
 	}
 
 	void drawEndState(Graphics g) {
@@ -264,6 +264,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			g.setFont(otherFont);
 			g.drawString("Press ENTER to restart", 270, 450);
 		} else if (score > 300) {
+			isWon = true;
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, Dodger.WIDTH, Dodger.HEIGHT);
 			g.setColor(Color.BLUE);
@@ -274,7 +275,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			setFont(endFont);
 			g.drawString("You escaped the trap and won", 50, 400);
 			g.drawString("with a score of " + score + " points!", 90, 450);
-			g.drawString("Press ENTER to restart", 150, 500);
+			g.drawString("You cannot go back into the trap after you have won.", 150, 500);
 		}
 	}
 
@@ -321,6 +322,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
+	
 		if (currentState == MENU) {
 			updateMenuState();
 		} else if (currentState == AVATARSELECT) {
@@ -339,14 +341,26 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if(up) {
 			player.up();
 		}
+		else {
+			up = false;
+		}
 		if(down) {
 			player.down();
+		}
+		else {
+			down = false;
 		}
 		if(right) {
 			player.right();;
 		}
+		else {
+			right = false;
+		}
 		if(left) {
 			player.left();
+		}
+		else {
+			left = false;
 		}
 		score = microManager.getScore();
 		repaint();
@@ -362,6 +376,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
+		if(isWon == false) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if(avatarSelected == false) {
 			if (currentState == END) {
@@ -437,6 +452,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 				}
 			}
 		}
+		}
 		if (e.getKeyCode() == KeyEvent.VK_E) {
 			if (invincible == false) {
 				invincible = true;
@@ -458,7 +474,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
-			if (player.y >= 10) {
+			if (player.y > 10) {
 				up = true;
 			}
 			else {
@@ -466,7 +482,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-			if (player.y < Dodger.HEIGHT - 100) {
+			if (player.y < 730) {
+				System.out.println(Dodger.WIDTH-70);
 				down = true;
 			}
 			else {
@@ -474,7 +491,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-			if (player.x < Dodger.WIDTH - 70) {
+			if (player.x <730) {
+				System.out.println(Dodger.WIDTH-70);
 				right = true;
 			}
 			else {
@@ -482,7 +500,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-			if (player.x >= 10) {
+			if (player.x > 10) {
 				left = true;
 			}
 			else {
