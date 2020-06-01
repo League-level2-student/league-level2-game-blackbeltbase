@@ -243,8 +243,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.drawString("Your chances of survival increase as your score increases!", 100, 400);
 		g.drawString("When you hit 50 points in level 1, you move on to level 2.", 50, 430);
 		g.drawString("When you hit 100 points in level 2, you move on to level 3.", 50, 460);
-		g.drawString("When you hit 300 points in level 3, you finally escape!", 200, 490);
-		g.drawString("When you are ready to move on to the next level, press ENTER.", 200, 520);
+		g.drawString("When you hit 300 points in level 3, you finally escape!", 50, 490);
+		g.drawString("When you are ready to move on to the next level, press ENTER.", 50, 520);
 		g.drawString("You increase your score by dodging ", 50, 550);
 		g.drawString("the lasers that appear in the trap!", 50, 580);
 		g.drawString("Use ARROW KEYS or WASD to dodge the lasers!", 200, 610);
