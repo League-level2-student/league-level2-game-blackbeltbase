@@ -213,6 +213,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 			g.setColor(Color.BLUE);
 			g.fillRect(10, 500, 100, 100);
 		}
+//		needImage = true;
+//		gotImage = false;
 		g.setFont(otherFont);
 		g.setColor(Color.YELLOW);
 		int getScore = microManager.getScore();
